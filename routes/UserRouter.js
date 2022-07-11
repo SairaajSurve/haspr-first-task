@@ -1,12 +1,15 @@
 const express = require('express')
 const { UserSignUp, GetUserData, UserLogin, EditUserData, DeleteUserData } = require('../controllers/UserController')
 
-const router = express.Router();
+const { Authenticate } = require('../middlewares/Authentication')
 
-// router.use()
+const router = express.Router();
 
 router.route('/signup').post(UserSignUp)
 router.route('/login').post(UserLogin)
+
+router.use(Authenticate)
+
 router.route('/data').get(GetUserData).patch(EditUserData).delete(DeleteUserData)
 
 
