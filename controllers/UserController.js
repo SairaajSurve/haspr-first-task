@@ -13,6 +13,7 @@ module.exports.UserSignUp = async (req, res, next) => {
         password: userPassword,
         salt: salt,
         email: email,
+        admin: false,
         data: data
     })
 
@@ -31,9 +32,8 @@ module.exports.UserLogin = async (req, res, next) => {
 
     const {password, email} = req.body
 
-
     const user = await User.findOne({email: email})
-    console.log(user)
+
     if (user) {
 
         const validation = await ValidatePassword(password, user.password, user.salt)
@@ -50,9 +50,9 @@ module.exports.UserLogin = async (req, res, next) => {
 }
 
 module.exports.GetUserData = async (req, res, next) => {
-    
-    const { _id } = req.body;
-    
+
+    const { _id } = req.user;
+
     if(_id) {
         const user = await User.findById(_id)
         
@@ -67,8 +67,9 @@ module.exports.GetUserData = async (req, res, next) => {
 
 module.exports.EditUserData = async (req, res, next) => {
     
-    const { _id, data } = req.body;
-    
+    const { _id} = req.user;
+    const { data } = req.body;
+
     if(_id) {
         const user = await User.findById(_id)
         
@@ -86,7 +87,7 @@ module.exports.EditUserData = async (req, res, next) => {
 
 module.exports.DeleteUserData = async (req, res, next) => {
     
-    const { _id } = req.body;
+    const { _id } = req.user;
     
     if(_id) {
         const user = await User.findById(_id)
