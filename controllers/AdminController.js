@@ -59,7 +59,6 @@ module.exports.GetUserData = async (req, res, next) => {
         if( admin.admin === true) {
             const users = await User.find({})
             const nonAdmins = users.filter((user) => {
-                console.log(user.admin);
                 if(user.admin === false) {
                     return true
                 }
