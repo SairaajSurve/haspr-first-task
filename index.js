@@ -1,4 +1,5 @@
 require('dotenv').config()
+require('express-async-errors')
 const express = require('express')
 const { ExpressApp } = require('./services/ExpressApp')
 const { dbConnection } = require('./services/Database')
